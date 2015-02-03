@@ -5,9 +5,12 @@
 .classpath
 .project
 .settings/
-
 .gradle/
 build/
 target/
-
 mods/
+.mtj.tmp/
+*.jar
+*.war
+*.ear
+hs_err_pid*
