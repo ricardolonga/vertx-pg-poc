@@ -18,7 +18,6 @@ package br.com.ricardolonga.vertxpgpoc.workers;
  * @author <a href="http://tfox.org">Tim Fox</a>
  */
 
-import org.vertx.java.core.Handler;
 import org.vertx.java.core.eventbus.Message;
 import org.vertx.java.core.json.JsonObject;
 import org.vertx.java.platform.Verticle;
@@ -33,18 +32,13 @@ public class ZipsWorker extends Verticle {
         /**
          * Pesquisa de 100 em 100...
          */
-        vertx.eventBus().registerHandler("zips.get", new Handler<Message<JsonObject>>() {
-            @Override
-            public void handle(final Message<JsonObject> mongoAction) {
-                System.out.println(Thread.currentThread().getName() + " - " + mongoAction.body().encodePrettily());
+        vertx.eventBus().registerHandler("zips.get", (Message<JsonObject> mongoAction) -> {
+            System.out.println(Thread.currentThread().getName() + " - " + mongoAction.body().encodePrettily());
 
-                vertx.eventBus().send("vertx.mongopersistor", mongoAction.body(), new Handler<Message<JsonObject>>() {
-                    @Override
-                    public void handle(Message<JsonObject> event) {
-                        mongoAction.reply(event.body());
-                    }
-                });
-            }
+            vertx.eventBus().send("vertx.mongopersistor", mongoAction.body(), (Message<JsonObject> event) ->
+                mongoAction.reply(event.body())
+            );
         });
+        
     }
 }
