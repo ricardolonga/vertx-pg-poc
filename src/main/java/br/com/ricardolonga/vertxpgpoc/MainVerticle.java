@@ -13,7 +13,7 @@ public class MainVerticle extends Verticle {
     public void start() {
         container.deployModule("io.vertx~mod-mongo-persistor~2.1.1-SNAPSHOT", container.config().getObject("mongo-persistor"));
 
-        container.deployWorkerVerticle("br.com.ricardolonga.vertxpgpoc.workers.ZipsWorker", 100);
+        container.deployWorkerVerticle("br.com.ricardolonga.vertxpgpoc.workers.ZipsWorker", 20);
 
         RouteMatcher routes = new RouteMatcher().get("/zips", (request) -> {
             System.out.println(Thread.currentThread().getName() + " - [GET] /zips");
